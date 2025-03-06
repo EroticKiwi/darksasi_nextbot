@@ -45,7 +45,7 @@ function ENT:DeclareVariables()
     self.maxChasingSpeed = 750
     self.chasingSpeed = self.minChasingSpeed
 
-    self.killDistance = 10
+    self.killDistance = 20
 
     self.nextChatMessageTime = CurTime()
     self.chatMessageDelay = 25
@@ -137,12 +137,20 @@ end
 
 function ENT:ChaseEnemy( options )
 
+    if (self.Enemy and IsValid(self.Enemy)) then
+        return "no enemy to follow"
+    end
+
 	local options = options or {}
 	local path = Path( "Follow" )
 	
     path:SetMinLookAheadDistance( options.lookahead or 300 )
 	path:SetGoalTolerance( options.tolerance or 20 )
 	path:Compute( self, self:GetEnemy():GetPos() )		-- Compute the path towards the enemy's position
+    
+    if (self.Enemy:Distance(self:GetPos()) <= self.killDistance) then
+        self:DamageEnemy()
+    end
 
 	if ( !path:IsValid() ) then 
         return "failed" 
@@ -270,7 +278,7 @@ function ENT:SendChatMessage()
         --return
     --end
 
-    player:PrintMessage(HUD_PRINTTALK, message)
+    ply:PrintMessage(HUD_PRINTTALK, message)
 end
 
 function ENT:OnRemove()
