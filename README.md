@@ -9,20 +9,22 @@ TABLE OF CONTENTS:
 
 ---
 
+**LEGEND**
+* `[]`: = DIRECTORY
+* `*[]` = OPTIONAL DIRECTORY
+* `$` = file
+
+---
+
 **1 - ADDON STRUCTURE**
 
 As far as my understanding goes, a gmod addon works following this file/directory structure:
-*[] = DIRECTORY*
-*[*] = OPTIONAL DIRECTORY*
-*$ = file*
 
-[**AddonName**]
-    |_ _ [**lua**] {contains all of our code}
-             |_ _ [**autorun**]
-                        |_ _ [**server**] {contains code that will be ran SERVER-SIDE}
-                        |_ _ [**client**] {contains code that will be ran CLIENT-SIDE}
-                        |_ _ $shared {contains code that will be shared between server and client}
-              |_ _ [***other folders**]
-    |_ _ [***materials**] {contains materials...only to be included if our addon needs custom materials}
-                |_ _ [***other folder**]
-    |_ _ [***models**] {contains models...only to be included if our addon needs custom models}
+* `[lua]`: {contains all of the addon's code}
+    * `[autorun]`: {{contains code that will be ran when the server starts up}}
+        * `[server]`: {{contains code that will be ran SERVER-SIDE}}
+        * `[client]`: {{contains code that will be ran CLIENT-SIDE}}
+        * `$shared`: {{contains code that is shared between server and code, usually utility functions}}
+    * `*[other folders]`
+* `*[materials]`: {{contains materials...needed only if our addon needs custom materials}}
+* `*[models]`: {{contains models...needed only if our addon needs custom models}}
